@@ -5,130 +5,77 @@ window.addEventListener('load', function() {
         const loader = document.querySelector('.loader-wrapper');
         loader.classList.add('hidden');
     }, 1500);
-    
-    // تحميل البيانات من Google Sheets عند تحميل الصفحة
-    loadTeamData();
 });
 
-// معرف الجدول والمفتاح الحقيقي
-const SHEET_ID = '1_zWO7VY0uLhHtXJwpNKUBe3FJt5roxWXSOq6eFzTmm4';
-const API_KEY = 'AIzaSyACBVXkfY8BQAqM2S-nzpwnrYt73C_zAvw';
-
-// دالة تحميل البيانات من Google Sheets
-async function loadTeamData() {
-    try {
-        console.log('جاري تحميل البيانات...');
-        
-        // تحميل بيانات النقاط من الورقة الأولى (Sheet1)
-        const pointsResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1?key=${API_KEY}`);
-        
-        if (!pointsResponse.ok) {
-            throw new Error(`خطأ في تحميل النقاط: ${pointsResponse.status}`);
-        }
-        
-        const pointsData = await pointsResponse.json();
-        console.log('بيانات النقاط:', pointsData);
-        
-        // تحميل بيانات التفاصيل من الورقة الثانية (تفاصيل)
-        const detailsResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/تفاصيل?key=${API_KEY}`);
-        
-        if (!detailsResponse.ok) {
-            console.warn('خطأ في تحميل التفاصيل، قد تكون الورقة الثانية غير موجودة');
-        }
-        
-        const detailsData = detailsResponse.ok ? await detailsResponse.json() : { values: [] };
-        console.log('بيانات التفاصيل:', detailsData);
-        
-        // تحديث البطاقات بالبيانات
-        updateCards(pointsData.values, detailsData.values || []);
-        
-    } catch (error) {
-        console.error('خطأ في تحميل البيانات:', error);
-    }
-}
-
-// دالة تحديث البطاقات
-function updateCards(pointsRows, detailsRows) {
-    if (!pointsRows || pointsRows.length < 2) {
-        console.error('لا توجد بيانات كافية في جدول النقاط');
-        return;
-    }
+// بيانات التفاصيل لكل عضو
+const memberDetails = {
+    'فرح': `فرح: 24 نقطة
+    •	الأعمال:
+    •	بوست التسجيل (1)
+    •	3 بوستات Silent Attacks (3)
+    •	عرض النادي (1)
+    •	3 بوستات رمضان (3)
+    •	3 ستوريات رمضان (3)
+    •	إطار الستوري (1)
+    •	3 بوستات النشرة (3)
+    •	كتيب النشرة ملف (6)
+    •	تعديلات Enigma (4 تعديلات × 0.5 = 2)
+    •	تعديل إعلان INE (0.5)
+    •	اقتراح تحسين بوستات التسجيل (0.5)`,
     
-    const cards = document.querySelectorAll('.member-card');
-    console.log('عدد البطاقات:', cards.length);
+    'معاذ': `معاذ: 8 نقاط
+    •	الأعمال:
+    •	بوست Enigma (1)
+    •	إعلان INE (1)
+    •	6 بوستات القبول (6)`,
     
-    // إنشاء قاموس للتفاصيل
-    let memberDetails = {};
-    if (detailsRows && detailsRows.length > 1) {
-        for (let i = 1; i < detailsRows.length; i++) {
-            const row = detailsRows[i];
-            if (row && row[0]) {
-                memberDetails[row[0].trim()] = row[1] || 'لا توجد تفاصيل متاحة';
-            }
-        }
-    }
-    console.log('قاموس التفاصيل:', memberDetails);
+    'ريم': `ريم: 10 نقاط
+    •	الأعمال:
+    •	4 بوستات Enigma (4)
+    •	كتيب النشرة ملف (6)`,
     
-    // تخزين التفاصيل للاستخدام في النافذة المنبثقة
-    window.memberDetails = memberDetails;
+    'البندري': `البندري: 7 نقاط
+    •	الأعمال:
+    •	1 بوست Silent Attacks (1)
+    •	كتيب النشرة ملف (6)`,
     
-    // تحديث كل بطاقة
-    for (let i = 1; i < pointsRows.length; i++) {
-        const row = pointsRows[i];
-        if (!row || row.length < 2) continue;
-        
-        const memberName = row[0] ? row[0].trim() : '';
-        if (!memberName) continue;
-        
-        // البحث عن البطاقة المناسبة
-        if (i-1 >= cards.length) continue;
-        
-        const card = cards[i-1];
-        if (!card) continue;
-        
-        // تحديث الاسم
-        const nameElement = card.querySelector('.member-name');
-        if (nameElement) nameElement.textContent = memberName;
-        
-        // تحديث النقاط
-        const pointItems = card.querySelectorAll('.point-item');
-        if (pointItems.length >= 5) {
-            // بوستات
-            const postValue = pointItems[0].querySelector('.point-value, .white-value');
-            if (postValue) postValue.textContent = row[1] || '-';
-            
-            // ملف
-            const fileValue = pointItems[1].querySelector('.point-value, .white-value');
-            if (fileValue) fileValue.textContent = row[2] || '-';
-            
-            // اقتراح
-            const suggestValue = pointItems[2].querySelector('.point-value, .white-value');
-            if (suggestValue) suggestValue.textContent = row[3] || '-';
-            
-            // تعديل
-            const editValue = pointItems[3].querySelector('.point-value, .white-value');
-            if (editValue) editValue.textContent = row[4] || '-';
-            
-            // المجموع
-            const totalValue = pointItems[4].querySelector('.total-value, .blue-total');
-            if (totalValue) totalValue.textContent = row[5] || '0';
-        }
-        
-        // تحديث المنصب
-        const roleElement = card.querySelector('.member-role');
-        if (roleElement) {
-            if (memberName.includes('فرح')) {
-                roleElement.textContent = 'قائد الفريق';
-            } else if (memberName.includes('معاذ')) {
-                roleElement.textContent = 'نائب قائد الفريق';
-            } else if (memberName) {
-                roleElement.textContent = 'عضو';
-            }
-        }
-    }
+    'سارة البراك': `سارة البراك: 6 نقاط
+    •	الأعمال:
+    •	3 بوستات Silent Attacks (3)
+    •	3 ستوريات رمضان (3)`,
     
-    console.log('تم تحديث البطاقات بنجاح');
-}
+    'أثير': `أثير: 6 نقاط
+    •	الأعمال:
+    •	3 بوستات Silent Attacks (3)
+    •	3 بوستات النشرة (3)`,
+    
+    'سارة السعود': `سارة السعود: 5 نقاط
+    •	الأعمال:
+    •	5 بوستات Enigma (5)`,
+    
+    'شذى': `شذى: 4 نقاط
+    •	الأعمال:
+    •	3 بوستات Enigma (3)
+    •	تعديل بوستين Enigma محاذاة الخط ( 2×0.5 )=1`,
+    
+    'هبه': `هبه التميمي: 0 نقاط
+    •	لا توجد أعمال حالياً`,
+    
+    'رفيدة': `رفيدة جابر: 0 نقاط
+    •	لا توجد أعمال حالياً`,
+    
+    'خوله': `خوله السديس: 0 نقاط
+    •	لا توجد أعمال حالياً`,
+    
+    'تسنيم': `تسنيم كريم: 0 نقاط
+    •	لا توجد أعمال حالياً`,
+    
+    'سعود': `سعود التميمي: 0 نقاط
+    •	لا توجد أعمال حالياً`,
+    
+    'موسى': `موسى المرشدي: 0 نقاط
+    •	لا توجد أعمال حالياً`
+};
 
 // فتح النافذة المنبثقة
 function openPopup(name) {
@@ -136,16 +83,8 @@ function openPopup(name) {
     const title = document.getElementById('popup-title');
     const body = document.getElementById('popup-body');
     
-    if (!popup || !title || !body) {
-        console.error('عناصر النافذة المنبثقة غير موجودة');
-        return;
-    }
-    
     title.textContent = name;
-    
-    // الحصول على التفاصيل من window.memberDetails
-    const details = window.memberDetails ? window.memberDetails[name] : null;
-    body.textContent = details || 'لا توجد تفاصيل متاحة';
+    body.textContent = memberDetails[name] || 'لا توجد تفاصيل متاحة';
     
     popup.classList.add('show');
 }
@@ -153,7 +92,7 @@ function openPopup(name) {
 // إغلاق النافذة المنبثقة
 function closePopup() {
     const popup = document.getElementById('popup');
-    if (popup) popup.classList.remove('show');
+    popup.classList.remove('show');
 }
 
 // إغلاق النافذة عند الضغط خارجها

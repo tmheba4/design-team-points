@@ -5,77 +5,105 @@ window.addEventListener('load', function() {
         const loader = document.querySelector('.loader-wrapper');
         loader.classList.add('hidden');
     }, 1500);
+    
+    // تحميل البيانات من Google Sheets
+    loadTeamData();
 });
 
-// بيانات التفاصيل لكل عضو
-const memberDetails = {
-    'فرح': `فرح: 24 نقطة
-    •	الأعمال:
-    •	بوست التسجيل (1)
-    •	3 بوستات Silent Attacks (3)
-    •	عرض النادي (1)
-    •	3 بوستات رمضان (3)
-    •	3 ستوريات رمضان (3)
-    •	إطار الستوري (1)
-    •	3 بوستات النشرة (3)
-    •	كتيب النشرة ملف (6)
-    •	تعديلات Enigma (4 تعديلات × 0.5 = 2)
-    •	تعديل إعلان INE (0.5)
-    •	اقتراح تحسين بوستات التسجيل (0.5)`,
+// معرف الجدول والمفتاح الحقيقي
+const SHEET_ID = '1_zWO7VY0uLhHtXJwpNKUBe3FJt5roxWXSOq6eFzTmm4';
+const API_KEY = 'AIzaSyACBVXkfY8BQAqM2S-nzpwnrYt73C_zAvw';
+
+// بيانات التفاصيل (تتحدث من الجدول)
+let memberDetails = {};
+
+// دالة تحميل البيانات من Google Sheets
+async function loadTeamData() {
+    try {
+        // تحميل بيانات النقاط من الورقة الأولى (Sheet1)
+        const pointsResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1?key=${API_KEY}`);
+        const pointsData = await pointsResponse.json();
+        
+        // تحميل بيانات التفاصيل من الورقة الثانية (تفاصيل)
+        const detailsResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/تفاصيل?key=${API_KEY}`);
+        const detailsData = await detailsResponse.json();
+        
+        // تحديث البطاقات بالبيانات
+        updateCards(pointsData.values, detailsData.values);
+        
+    } catch (error) {
+        console.error('خطأ في تحميل البيانات:', error);
+    }
+}
+
+// دالة تحديث البطاقات
+function updateCards(pointsRows, detailsRows) {
+    const cards = document.querySelectorAll('.member-card');
     
-    'معاذ': `معاذ: 8 نقاط
-    •	الأعمال:
-    •	بوست Enigma (1)
-    •	إعلان INE (1)
-    •	6 بوستات القبول (6)`,
+    // استخراج العناوين من أول صف
+    const headers = pointsRows[0];
     
-    'ريم': `ريم: 10 نقاط
-    •	الأعمال:
-    •	4 بوستات Enigma (4)
-    •	كتيب النشرة ملف (6)`,
+    // إنشاء خريطة للتفاصيل
+    if (detailsRows) {
+        for (let i = 1; i < detailsRows.length; i++) {
+            const row = detailsRows[i];
+            if (row && row[0]) {
+                memberDetails[row[0]] = row[1] || 'لا توجد تفاصيل متاحة';
+            }
+        }
+    }
     
-    'البندري': `البندري: 7 نقاط
-    •	الأعمال:
-    •	1 بوست Silent Attacks (1)
-    •	كتيب النشرة ملف (6)`,
-    
-    'سارة البراك': `سارة البراك: 6 نقاط
-    •	الأعمال:
-    •	3 بوستات Silent Attacks (3)
-    •	3 ستوريات رمضان (3)`,
-    
-    'أثير': `أثير: 6 نقاط
-    •	الأعمال:
-    •	3 بوستات Silent Attacks (3)
-    •	3 بوستات النشرة (3)`,
-    
-    'سارة السعود': `سارة السعود: 5 نقاط
-    •	الأعمال:
-    •	5 بوستات Enigma (5)`,
-    
-    'شذى': `شذى: 4 نقاط
-    •	الأعمال:
-    •	3 بوستات Enigma (3)
-    •	تعديل بوستين Enigma محاذاة الخط ( 2×0.5 )=1`,
-    
-    'هبه': `هبه التميمي: 0 نقاط
-    •	لا توجد أعمال حالياً`,
-    
-    'رفيدة': `رفيدة جابر: 0 نقاط
-    •	لا توجد أعمال حالياً`,
-    
-    'خوله': `خوله السديس: 0 نقاط
-    •	لا توجد أعمال حالياً`,
-    
-    'تسنيم': `تسنيم كريم: 0 نقاط
-    •	لا توجد أعمال حالياً`,
-    
-    'سعود': `سعود التميمي: 0 نقاط
-    •	لا توجد أعمال حالياً`,
-    
-    'موسى': `موسى المرشدي: 0 نقاط
-    •	لا توجد أعمال حالياً`
-};
+    // تحديث كل بطاقة
+    cards.forEach((card, index) => {
+        if (index + 1 < pointsRows.length) {
+            const row = pointsRows[index + 1];
+            const memberName = row[0] || '';
+            
+            // تحديث الاسم
+            const nameElement = card.querySelector('.member-name');
+            if (nameElement) nameElement.textContent = memberName;
+            
+            // تحديث النقاط
+            const pointItems = card.querySelectorAll('.point-item');
+            if (pointItems.length >= 5) {
+                // بوستات
+                const postValue = pointItems[0].querySelector('.point-value, .white-value');
+                if (postValue) postValue.textContent = row[1] || '-';
+                
+                // ملف
+                const fileValue = pointItems[1].querySelector('.point-value, .white-value');
+                if (fileValue) fileValue.textContent = row[2] || '-';
+                
+                // اقتراح
+                const suggestValue = pointItems[2].querySelector('.point-value, .white-value');
+                if (suggestValue) suggestValue.textContent = row[3] || '-';
+                
+                // تعديل
+                const editValue = pointItems[3].querySelector('.point-value, .white-value');
+                if (editValue) editValue.textContent = row[4] || '-';
+                
+                // المجموع
+                const totalItem = pointItems[4];
+                if (totalItem) {
+                    const totalValue = totalItem.querySelector('.total-value, .blue-total');
+                    if (totalValue) totalValue.textContent = row[5] || '0';
+                }
+            }
+            
+            // تحديث المنصب
+            const roleElement = card.querySelector('.member-role');
+            if (roleElement) {
+                if (memberName === 'فرح الشمري') {
+                    roleElement.textContent = 'قائد الفريق';
+                } else if (memberName === 'معاذ الحربي') {
+                    roleElement.textContent = 'نائب قائد الفريق';
+                } else if (memberName) {
+                    roleElement.textContent = 'عضو';
+                }
+            }
+        }
+    });
+}
 
 // فتح النافذة المنبثقة
 function openPopup(name) {

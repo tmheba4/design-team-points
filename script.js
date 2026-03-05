@@ -58,7 +58,7 @@ const memberDetails = {
     •	3 بوستات Enigma (3)
     •	تعديل بوستين Enigma محاذاة الخط ( 2×0.5 )=1`,
     
-    'هبه': `هبه التميمي: 100 نقاط
+    'هبه': `هبه التميمي: 0 نقاط
     •	لا توجد أعمال حالياً`,
     
     'رفيدة': `رفيدة جابر: 0 نقاط
@@ -147,4 +147,5 @@ document.addEventListener('mousemove', function(e) {
         element.style.transform = `translate(${x}px, ${y}px)`;
     });
 });
+
 

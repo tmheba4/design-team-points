@@ -1,5 +1,5 @@
 
-// شاشة التحميل - مدة قصيرة جداً (لمحة)
+// شاشة التحميل
 window.addEventListener('load', function() {
     setTimeout(() => {
         const loader = document.querySelector('.loader-wrapper');
@@ -21,7 +21,7 @@ const memberDetails = {
     •	كتيب النشرة ملف (6)
     •	تعديلات Enigma (4 تعديلات × 0.5 = 2)
     •	تعديل إعلان INE (0.5)
-    •	اقتراح تحسين بوستات القبول (0.5)`,
+    •	اقتراح تحسين بوستات التسجيل (0.5)`,
     
     'معاذ': `معاذ: 8 نقاط
     •	الأعمال:
@@ -121,7 +121,7 @@ const mainCard = document.getElementById('mainCard');
 if (mainCard) {
     mainCard.addEventListener('mousedown', function() {
         this.style.transform = 'translateY(-5px) scale(1.01)';
-        this.style.boxShadow = '0 20px 40px rgba(0, 102, 255, 0.3), 0 0 40px rgba(0, 168, 255, 0.3)';
+        this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3), 0 0 40px rgba(255, 255, 255, 0.3)';
     });
     
     mainCard.addEventListener('mouseup', function() {
@@ -130,7 +130,7 @@ if (mainCard) {
     
     mainCard.addEventListener('mouseleave', function() {
         this.style.transform = 'translateY(0) scale(1)';
-        this.style.boxShadow = '0 15px 35px rgba(0, 102, 255, 0.2)';
+        this.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.2)';
     });
 }
 
@@ -147,4 +147,3 @@ document.addEventListener('mousemove', function(e) {
         element.style.transform = `translate(${x}px, ${y}px)`;
     });
 });
-

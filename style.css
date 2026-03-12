@@ -1,7 +1,7 @@
 
 
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Cairo:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Beiruti:wght@200;300;400;500;600;700;800;900&display=swap');
 
 * {
     margin: 0;
@@ -10,7 +10,7 @@
 }
 
 body {
-    font-family: 'Cairo', sans-serif;
+    font-family: 'Beiruti', sans-serif;
     background: #030614;
     min-height: 100vh;
     color: #fff;
@@ -99,7 +99,78 @@ body::after {
     100% { transform: scale(1.3); }
 }
 
-/* شاشة التحميل - مع شعار فخم */
+/* العناصر المضيئة */
+.floating-elements {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.element {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    filter: blur(60px);
+    animation: float 20s infinite ease-in-out;
+}
+
+.element:nth-child(1) {
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    right: -100px;
+    background: rgba(0, 57, 166, 0.15);
+    animation-delay: 0s;
+}
+
+.element:nth-child(2) {
+    width: 300px;
+    height: 300px;
+    bottom: 10%;
+    left: -50px;
+    background: rgba(217, 4, 43, 0.15);
+    animation-delay: -3s;
+}
+
+.element:nth-child(3) {
+    width: 500px;
+    height: 500px;
+    top: 30%;
+    left: 20%;
+    background: rgba(0, 57, 166, 0.1);
+    animation-delay: -7s;
+}
+
+.element:nth-child(4) {
+    width: 200px;
+    height: 200px;
+    bottom: 20%;
+    right: 15%;
+    background: rgba(217, 4, 43, 0.1);
+    animation-delay: -12s;
+}
+
+.element:nth-child(5) {
+    width: 350px;
+    height: 350px;
+    top: 60%;
+    right: 25%;
+    background: rgba(0, 57, 166, 0.1);
+    animation-delay: -5s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(50px, 50px) scale(1.1); }
+    50% { transform: translate(0, 100px) scale(0.9); }
+    75% { transform: translate(-50px, 50px) scale(1.05); }
+}
+
+/* شاشة التحميل - القديمة */
 .loader-wrapper {
     position: fixed;
     top: 0;
@@ -120,17 +191,16 @@ body::after {
 }
 
 .loader-image {
-    width: 280px;
+    width: 200px;
     height: auto;
     filter: 
         brightness(0) invert(1) 
         drop-shadow(0 0 20px #0039a6) 
-        drop-shadow(0 0 40px #d9042b)
-        drop-shadow(0 0 60px #0039a6);
-    animation: logoPulse 2s ease-in-out infinite;
+        drop-shadow(0 0 40px #d9042b);
+    animation: loaderPulse 2s ease-in-out infinite;
 }
 
-@keyframes logoPulse {
+@keyframes loaderPulse {
     0%, 100% { transform: scale(1); opacity: 0.9; }
     50% { transform: scale(1.1); opacity: 1; }
 }
@@ -176,7 +246,6 @@ body::after {
     100% { left: 100%; }
 }
 
-/* الشعار - زين مو خرا 🔥 */
 .logo-container {
     display: flex;
     justify-content: center;
@@ -204,7 +273,7 @@ body::after {
         drop-shadow(0 0 50px #d9042b);
 }
 
-/* العنوان الرئيسي - خط Orbitron التقني */
+/* العنوان الرئيسي */
 .main-title {
     font-size: 3.5rem;
     font-weight: 800;
@@ -217,8 +286,7 @@ body::after {
         0 0 30px rgba(0, 57, 166, 0.6), 
         0 0 60px rgba(217, 4, 43, 0.4),
         3px 3px 0 rgba(0, 57, 166, 0.2);
-    font-family: 'Orbitron', sans-serif;
-    letter-spacing: 2px;
+    font-family: 'Beiruti', sans-serif;
 }
 
 .subtitle {
@@ -227,7 +295,7 @@ body::after {
     max-width: 800px;
     margin: 0 auto;
     line-height: 1.8;
-    font-family: 'Cairo', sans-serif;
+    font-family: 'Beiruti', sans-serif;
     text-shadow: 0 0 20px rgba(0, 57, 166, 0.4);
 }
 
@@ -290,7 +358,7 @@ body::after {
     color: #fff;
     position: relative;
     display: inline-block;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Beiruti', sans-serif;
     font-weight: 700;
     text-shadow: 0 0 20px #0039a6;
 }
@@ -340,7 +408,7 @@ body::after {
     font-size: 1.3rem;
     font-weight: 600;
     color: #fff;
-    font-family: 'Cairo', sans-serif;
+    font-family: 'Beiruti', sans-serif;
 }
 
 .item-value {
@@ -350,7 +418,7 @@ body::after {
     padding: 5px 20px;
     border-radius: 50px;
     border: 1px solid rgba(0, 57, 166, 0.5);
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Beiruti', sans-serif;
 }
 
 /* النقاط الزرقاء المتوهجة */
@@ -374,10 +442,9 @@ body::after {
     opacity: 0;
     transform: translateY(30px);
     animation: fadeInUp 1s ease 0.6s forwards;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Beiruti', sans-serif;
     font-weight: 700;
     text-shadow: 0 0 30px rgba(0, 57, 166, 0.4);
-    letter-spacing: 2px;
 }
 
 /* شبكة البطاقات */
@@ -443,6 +510,7 @@ body::after {
 .member-card:nth-child(11) { animation-delay: 0.6s; }
 .member-card:nth-child(12) { animation-delay: 0.65s; }
 .member-card:nth-child(13) { animation-delay: 0.7s; }
+.member-card:nth-child(14) { animation-delay: 0.75s; }
 
 /* حاوية الأفاتار */
 .avatar-container {
@@ -490,12 +558,11 @@ body::after {
     font-size: 1.4rem;
     margin-bottom: 5px;
     color: #fff;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Beiruti', sans-serif;
     font-weight: 700;
     display: block;
     text-align: center;
     text-shadow: 0 0 15px #0039a6;
-    letter-spacing: 1px;
 }
 
 /* المنصب */
@@ -503,7 +570,7 @@ body::after {
     font-size: 1rem;
     color: #fff;
     margin-bottom: 15px;
-    font-family: 'Cairo', sans-serif;
+    font-family: 'Beiruti', sans-serif;
     font-weight: 600;
     display: block;
     text-align: center;
@@ -530,7 +597,7 @@ body::after {
     background: rgba(0, 57, 166, 0.15);
     border-radius: 10px;
     transition: all 0.3s ease;
-    font-family: 'Cairo', sans-serif;
+    font-family: 'Beiruti', sans-serif;
     border: 1px solid rgba(217, 4, 43, 0.2);
     backdrop-filter: blur(5px);
 }
@@ -549,7 +616,7 @@ body::after {
 }
 
 .point-value {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Beiruti', sans-serif;
     font-weight: 600;
 }
 
@@ -587,8 +654,7 @@ body::after {
     transition: all 0.3s ease;
     margin: 15px 0 0;
     backdrop-filter: blur(10px);
-    font-family: 'Orbitron', sans-serif;
-    letter-spacing: 1px;
+    font-family: 'Beiruti', sans-serif;
     box-shadow: 0 0 20px rgba(0, 57, 166, 0.3);
 }
 
@@ -627,11 +693,45 @@ body::after {
     text-align: center;
 }
 
+/* تذييل الصفحة - شعار كبير وواضح */
+.footer-logo {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.footer-logo-img {
+    width: 180px;
+    height: auto;
+    filter: 
+        brightness(0) invert(1) 
+        drop-shadow(0 0 20px #0039a6) 
+        drop-shadow(0 0 40px #d9042b);
+    transition: all 0.3s ease;
+    animation: footerLogoGlow 3s ease-in-out infinite;
+}
+
+.footer-logo-img:hover {
+    transform: scale(1.1);
+    filter: 
+        brightness(0) invert(1) 
+        drop-shadow(0 0 30px #0039a6) 
+        drop-shadow(0 0 60px #d9042b);
+}
+
+@keyframes footerLogoGlow {
+    0%, 100% {
+        filter: brightness(0) invert(1) drop-shadow(0 0 15px #0039a6) drop-shadow(0 0 30px #d9042b);
+    }
+    50% {
+        filter: brightness(0) invert(1) drop-shadow(0 0 25px #0039a6) drop-shadow(0 0 50px #d9042b);
+    }
+}
+
 .copyright {
     color: rgba(255, 255, 255, 0.95);
     font-size: 1.1rem;
     letter-spacing: 1px;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Beiruti', sans-serif;
     font-weight: 500;
     text-shadow: 0 0 10px #0039a6;
 }
@@ -643,7 +743,7 @@ body::after {
     padding: 12px 35px;
     border-radius: 50px;
     border: 1px solid #d9042b;
-    font-family: 'Cairo', sans-serif;
+    font-family: 'Beiruti', sans-serif;
     font-weight: 600;
     box-shadow: 0 0 30px rgba(217, 4, 43, 0.3);
     backdrop-filter: blur(5px);
@@ -757,7 +857,7 @@ body::after {
     color: #fff;
     margin-bottom: 20px;
     text-align: center;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Beiruti', sans-serif;
     font-weight: 700;
     text-shadow: 
         0 0 30px #0039a6, 
@@ -768,7 +868,7 @@ body::after {
     color: white;
     font-size: 1.2rem;
     line-height: 1.8;
-    font-family: 'Cairo', sans-serif;
+    font-family: 'Beiruti', sans-serif;
     white-space: pre-line;
 }
 
@@ -831,7 +931,11 @@ body::after {
     }
     
     .loader-image {
-        width: 200px;
+        width: 150px;
+    }
+    
+    .footer-logo-img {
+        width: 140px;
     }
 }
 
@@ -856,6 +960,10 @@ body::after {
     .popup-content {
         padding: 30px 20px;
     }
+    
+    .footer-logo-img {
+        width: 120px;
+    }
 }
 
 /* الخط الأبيض المتوهج تحت الاسم */
@@ -869,4 +977,9 @@ body::after {
     height: 3px;
     background: linear-gradient(90deg, transparent, #0039a6, #d9042b, transparent);
     box-shadow: 0 0 20px #0039a6;
+}
+
+/* إلغاء أي خط قديم */
+.member-name::before {
+    display: none;
 }

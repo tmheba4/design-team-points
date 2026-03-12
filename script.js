@@ -1,5 +1,4 @@
 
-
 // شاشة التحميل
 window.addEventListener('load', function() {
     setTimeout(() => {
@@ -72,6 +71,9 @@ const memberDetails = {
     •	لا توجد أعمال حالياً`,
     
     'سعود': `سعود التميمي: 0 نقاط
+    •	لا توجد أعمال حالياً`,
+    
+    'موسى': `موسى المرشدي: 0 نقاط
     •	لا توجد أعمال حالياً`
 };
 
@@ -101,15 +103,23 @@ window.addEventListener('click', function(e) {
     }
 });
 
-// تأثيرات عند التمرير
+// تأثير التمرير - البطاقة الظاهرة تبرز
 window.addEventListener('scroll', function() {
     const cards = document.querySelectorAll('.member-card');
+    
     cards.forEach(card => {
         const rect = card.getBoundingClientRect();
-        const isVisible = rect.top < window.innerHeight - 100 && rect.bottom > 0;
+        const windowHeight = window.innerHeight;
+        
+        // البطاقة تعتبر ظاهرة إذا كانت في منتصف الشاشة تقريباً
+        const isVisible = rect.top < windowHeight - 100 && rect.bottom > 100;
+        
         if (isVisible) {
+            card.classList.add('highlight');
             card.style.opacity = '1';
             card.style.transform = 'translateY(0)';
+        } else {
+            card.classList.remove('highlight');
         }
     });
 });
@@ -119,7 +129,6 @@ const mainCard = document.getElementById('mainCard');
 if (mainCard) {
     mainCard.addEventListener('mousedown', function() {
         this.style.transform = 'translateY(-5px) scale(1.01)';
-        this.style.boxShadow = '0 20px 40px rgba(0, 57, 166, 0.3), 0 0 40px rgba(217, 4, 43, 0.3)';
     });
     
     mainCard.addEventListener('mouseup', function() {
@@ -128,7 +137,6 @@ if (mainCard) {
     
     mainCard.addEventListener('mouseleave', function() {
         this.style.transform = 'translateY(0) scale(1)';
-        this.style.boxShadow = '0 15px 35px rgba(0, 57, 166, 0.2)';
     });
 }
 
@@ -144,4 +152,11 @@ document.addEventListener('mousemove', function(e) {
         const y = (mouseY * speed) - (speed / 2);
         element.style.transform = `translate(${x}px, ${y}px)`;
     });
+});
+
+// تشغيل تأثير التمرير مرة واحدة عند تحميل الصفحة
+window.addEventListener('load', function() {
+    setTimeout(() => {
+        window.dispatchEvent(new Event('scroll'));
+    }, 100);
 });

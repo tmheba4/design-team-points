@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Beiruti:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Beiruti:wght@300;400;500;600;700;800&display=swap');
 
 * {
     margin: 0;
@@ -298,12 +298,11 @@ body::after {
     overflow: hidden;
 }
 
-/* تأثير التمرير - ظل أبيض خفيف */
+/* تأثير التمرير - ظل أسود خفيف */
 .member-card.highlight {
     box-shadow: 
-        0 0 30px rgba(255, 255, 255, 0.5),
-        0 0 60px rgba(255, 255, 255, 0.3),
-        0 20px 40px rgba(0, 0, 0, 0.6);
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
     z-index: 10;
 }
@@ -400,7 +399,6 @@ body::after {
     display: inline-block;
     font-family: 'Beiruti', sans-serif;
     font-weight: 700;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .top-three-title::after {

@@ -6,7 +6,11 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+img{
+    max-width:100%;
+    height:auto;
+    image-rendering:-webkit-optimize-contrast;
+}
 body {
     font-family: 'Beiruti', sans-serif;
     background: #030614;
@@ -870,3 +874,4 @@ body::after {
     height: 3px;
     background: linear-gradient(90deg, transparent, #0039a6, #d9042b, transparent);
 }
+

@@ -149,7 +149,7 @@ body::after {
     75% { transform: translate(-50px, 50px) scale(1.05); }
 }
 
-/* شاشة التحميل - شعار متحرك (انقسام والتحام) */
+/* شاشة التحميل - شعار ثابت */
 .loader-wrapper {
     position: fixed;
     top: 0;
@@ -169,55 +169,14 @@ body::after {
     visibility: hidden;
 }
 
-.loader-logo-container {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.loader-logo {
-    position: absolute;
-    width: 250px;
+.loader-image {
+    width: 200px;
     height: auto;
     filter: 
         brightness(0) invert(1) 
         drop-shadow(0 0 20px #0039a6) 
         drop-shadow(0 0 40px #d9042b);
-}
-
-.loader-logo-top {
-    clip-path: inset(0 0 50% 0);
-    animation: slideDown 1.5s ease-out forwards;
-}
-
-.loader-logo-bottom {
-    clip-path: inset(50% 0 0 0);
-    animation: slideUp 1.5s ease-out forwards;
-}
-
-@keyframes slideDown {
-    0% {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideUp {
-    0% {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
+    /* ثابت بدون حركة */
 }
 
 /* المحتوى الرئيسي */
@@ -545,7 +504,6 @@ body::after {
 .member-card:nth-child(11) { animation-delay: 0.6s; }
 .member-card:nth-child(12) { animation-delay: 0.65s; }
 .member-card:nth-child(13) { animation-delay: 0.7s; }
-.member-card:nth-child(14) { animation-delay: 0.75s; }
 
 /* حاوية الأفاتار */
 .avatar-container {
@@ -681,7 +639,7 @@ body::after {
     transform: translateY(-2px);
 }
 
-/* الفوتر (بدون شعار) */
+/* الفوتر */
 .glass-footer {
     background: rgba(3, 6, 20, 0.3);
     backdrop-filter: blur(20px);
@@ -859,15 +817,6 @@ body::after {
         width: 150px;
     }
 
-    .loader-logo {
-        width: 200px;
-    }
-
-    .loader-logo-container {
-        width: 250px;
-        height: 250px;
-    }
-
     .top-rank {
         font-size: 1.5rem;
         min-width: 40px;
@@ -907,15 +856,6 @@ body::after {
 
     .top-item {
         padding: 10px 15px;
-    }
-
-    .loader-logo {
-        width: 150px;
-    }
-
-    .loader-logo-container {
-        width: 200px;
-        height: 200px;
     }
 }
 

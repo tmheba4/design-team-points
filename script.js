@@ -4,7 +4,7 @@ window.addEventListener('load', function() {
     setTimeout(() => {
         const loader = document.querySelector('.loader-wrapper');
         loader.classList.add('hidden');
-    }, 800); // 0.8 ثانية
+    }, 800);
 });
 
 // بيانات التفاصيل لكل عضو (بدون موسى)
@@ -21,13 +21,13 @@ const memberDetails = {
     •	كتيب النشرة ملف (6)
     •	تعديلات Enigma (4 تعديلات × 0.5 = 2)
     •	تعديل إعلان INE (0.5)
-    •	اقتراح تحسين صور القبول (0.5)`,
+    •	اقتراح تحسين بوستات التسجيل (0.5)`,
     
     'معاذ': `معاذ: 8 نقاط
     •	الأعمال:
     •	بوست Enigma (1)
     •	إعلان INE (1)
-    •	6 صور القبول (6)`,
+    •	6 بوستات القبول (6)`,
     
     'ريم': `ريم: 10 نقاط
     •	الأعمال:
@@ -199,4 +199,3 @@ window.addEventListener('load', function() {
     // ترتيب أفضل 3 أعضاء تلقائياً
     updateTopThree();
 });
-

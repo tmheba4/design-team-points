@@ -74,46 +74,6 @@ const memberDetails = {
     •	لا توجد أعمال حالياً`
 };
 
-// دالة استخراج النقاط من النص
-
-function extractPoints(name) {
-    const details = memberDetails[name];
-    if (!details) return 0;
-
-    const match = details.match(/(\d+(\.\d+)?)\s*نقطة/);
-    return match ? parseFloat(match[1]) : 0;
-}
-// دالة ترتيب أفضل 3 أعضاء تلقائياً
-function updateTopThree() {
-    // إنشاء مصفوفة من الأسماء والنقاط
-    const members = Object.keys(memberDetails).map(name => ({
-        name: name,
-        points: extractPoints(name)
-    }));
-    
-    // ترتيب تنازلي حسب النقاط
-    members.sort((a, b) => b.points - a.points);
-    
-    // أخذ أفضل 3
-    const topThree = members.slice(0, 3);
-    
-    // تحديث الـ HTML
-    const topItems = document.querySelectorAll('.top-item');
-    const rankIcons = ['🥇', '🥈', '🥉'];
-    
-    topItems.forEach((item, index) => {
-        if (index < topThree.length) {
-            const rankSpan = item.querySelector('.top-rank');
-            const nameSpan = item.querySelector('.top-name');
-            const pointsSpan = item.querySelector('.top-points');
-            
-            if (rankSpan) rankSpan.textContent = rankIcons[index];
-            if (nameSpan) nameSpan.textContent = topThree[index].name;
-            if (pointsSpan) pointsSpan.textContent = topThree[index].points + ' نقاط';
-        }
-    });
-}
-
 // فتح النافذة المنبثقة
 function openPopup(name) {
     const popup = document.getElementById('popup');
@@ -189,14 +149,9 @@ document.addEventListener('mousemove', function(e) {
     });
 });
 
-// تشغيل الدوال عند تحميل الصفحة
+// تشغيل تأثير التمرير مرة واحدة عند تحميل الصفحة
 window.addEventListener('load', function() {
     setTimeout(() => {
         window.dispatchEvent(new Event('scroll'));
     }, 200);
-    
-    // ترتيب أفضل 3 أعضاء تلقائياً
-    updateTopThree();
 });
-
-

@@ -1,11 +1,11 @@
 
 
-// شاشة التحميل
+// شاشة التحميل - مدة أطول لتكتمل حركة الالتحام
 window.addEventListener('load', function() {
     setTimeout(() => {
         const loader = document.querySelector('.loader-wrapper');
         loader.classList.add('hidden');
-    }, 1500);
+    }, 2000); // ثانيتين عشان يكتمل تأثير الانقسام والالتحام
 });
 
 // بيانات التفاصيل لكل عضو
@@ -78,6 +78,47 @@ const memberDetails = {
     •	لا توجد أعمال حالياً`
 };
 
+// دالة استخراج النقاط من النص
+function extractPoints(name) {
+    const details = memberDetails[name];
+    if (!details) return 0;
+    
+    // البحث عن الرقم قبل "نقطة"
+    const match = details.match(/(\d+)\s*نقطة/);
+    return match ? parseInt(match[1]) : 0;
+}
+
+// دالة ترتيب أفضل 3 أعضاء تلقائياً
+function updateTopThree() {
+    // إنشاء مصفوفة من الأسماء والنقاط
+    const members = Object.keys(memberDetails).map(name => ({
+        name: name,
+        points: extractPoints(name)
+    }));
+    
+    // ترتيب تنازلي حسب النقاط
+    members.sort((a, b) => b.points - a.points);
+    
+    // أخذ أفضل 3
+    const topThree = members.slice(0, 3);
+    
+    // تحديث الـ HTML
+    const topItems = document.querySelectorAll('.top-item');
+    const rankIcons = ['🥇', '🥈', '🥉'];
+    
+    topItems.forEach((item, index) => {
+        if (index < topThree.length) {
+            const rankSpan = item.querySelector('.top-rank');
+            const nameSpan = item.querySelector('.top-name');
+            const pointsSpan = item.querySelector('.top-points');
+            
+            if (rankSpan) rankSpan.textContent = rankIcons[index];
+            if (nameSpan) nameSpan.textContent = topThree[index].name;
+            if (pointsSpan) pointsSpan.textContent = topThree[index].points + ' نقاط';
+        }
+    });
+}
+
 // فتح النافذة المنبثقة
 function openPopup(name) {
     const popup = document.getElementById('popup');
@@ -104,7 +145,7 @@ window.addEventListener('click', function(e) {
     }
 });
 
-// تأثير التمرير - البطاقة الظاهرة يظهر خلفها ظل أبيض خفيف
+// تأثير التمرير - البطاقة الظاهرة يظهر خلفها ظل أسود خفيف
 window.addEventListener('scroll', function() {
     const cards = document.querySelectorAll('.member-card');
     
@@ -153,9 +194,12 @@ document.addEventListener('mousemove', function(e) {
     });
 });
 
-// تشغيل تأثير التمرير مرة واحدة عند تحميل الصفحة
+// تشغيل الدوال عند تحميل الصفحة
 window.addEventListener('load', function() {
     setTimeout(() => {
         window.dispatchEvent(new Event('scroll'));
     }, 200);
+    
+    // ترتيب أفضل 3 أعضاء تلقائياً
+    updateTopThree();
 });

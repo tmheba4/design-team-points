@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -15,12 +16,9 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- شاشة التحميل - شعار منقسم يتحرك -->
+    <!-- شاشة التحميل - شعار ثابت -->
     <div class="loader-wrapper">
-        <div class="loader-logo-container">
-            <img src="assets/logo1.png.svg" alt="شعار النادي" class="loader-logo loader-logo-top">
-            <img src="assets/logo1.png.svg" alt="شعار النادي" class="loader-logo loader-logo-bottom">
-        </div>
+        <img src="assets/loading.png.svg" alt="Loading..." class="loader-image">
     </div>
 
     <!-- صورة الخلفية الكبيرة -->
@@ -100,7 +98,7 @@
         <!-- عنوان جميع الأعضاء -->
         <h2 class="team-title">جميع أعضاء فريق التصميم</h2>
 
-        <!-- بطاقات جميع الأعضاء -->
+        <!-- بطاقات جميع الأعضاء (بدون موسى) -->
         <section class="team-grid">
             <!-- فرح الشمري -->
             <div class="member-card glass-card" data-id="1">
@@ -543,47 +541,13 @@
                 </div>
                 <button class="details-btn" onclick="openPopup('سعود')">عرض التفاصيل</button>
             </div>
-
-            <!-- موسى المرشدي -->
-            <div class="member-card glass-card" data-id="14">
-                <div class="avatar-container">
-                    <div class="avatar male">
-                        <i class="fas fa-user"></i>
-                    </div>
-                </div>
-                <h3 class="member-name">موسى المرشدي</h3>
-                <div class="member-role">عضو</div>
-                <div class="points-details">
-                    <div class="point-item">
-                        <span>بوستات</span>
-                        <span class="point-value white-value">-</span>
-                    </div>
-                    <div class="point-item">
-                        <span>ملف</span>
-                        <span class="point-value white-value">-</span>
-                    </div>
-                    <div class="point-item">
-                        <span>اقتراح</span>
-                        <span class="point-value white-value">-</span>
-                    </div>
-                    <div class="point-item">
-                        <span>تعديل</span>
-                        <span class="point-value white-value">-</span>
-                    </div>
-                    <div class="point-item total">
-                        <span>المجموع</span>
-                        <span class="total-value blue-total">0</span>
-                    </div>
-                </div>
-                <button class="details-btn" onclick="openPopup('موسى')">عرض التفاصيل</button>
-            </div>
         </section>
 
-        <!-- الفوتر (بدون شعار) -->
+        <!-- الفوتر -->
         <footer class="glass-footer">
             <div class="footer-content">
                 <div class="copyright">
-                    ©️ 2026 جميع الحقوق محفوظة
+                    ©️ 2026  جميع الحقوق محفوظة
                 </div>
                 <div class="supervisor">
                     الإشراف والمتابعة قائد فريق التصميم: فرح عبدالله الشمري
@@ -607,5 +571,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-

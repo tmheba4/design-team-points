@@ -6,7 +6,11 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+img{
+    max-width:100%;
+    height:auto;
+    image-rendering:-webkit-optimize-contrast;
+}
 body {
     font-family: 'Beiruti', sans-serif;
     background: #030614;
@@ -149,7 +153,8 @@ body::after {
     75% { transform: translate(-50px, 50px) scale(1.05); }
 }
 
-/* شاشة التحميل - شعار ساده بدون ظل */
+/* شاشة التحميل - شعار ثابت */
+
 .loader-wrapper {
     position: fixed;
     top: 0;
@@ -172,9 +177,7 @@ body::after {
 .loader-image {
     width: 200px;
     height: auto;
-    filter: brightness(0) invert(1);
 }
-
 /* المحتوى الرئيسي */
 .content {
     position: relative;
@@ -184,7 +187,7 @@ body::after {
     padding: 20px 40px;
 }
 
-/* الهيدر مع الشعار (ثابت) */
+/* الهيدر مع الشعار */
 .glass-header {
     background: rgba(3, 6, 20, 0.2);
     backdrop-filter: blur(20px);
@@ -193,27 +196,9 @@ body::after {
     border-radius: 20px;
     padding: 15px 30px;
     margin-bottom: 40px;
-    box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(217, 4, 43, 0.2),
-        inset 0 0 30px rgba(0, 57, 166, 0.1);
     position: relative;
     overflow: hidden;
-}
-
-.glass-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 57, 166, 0.2), rgba(217, 4, 43, 0.2), transparent);
-    animation: shimmer 4s infinite;
-}
-
-@keyframes shimmer {
-    100% { left: 100%; }
+    /* تم إزالة الـ box-shadow لإزالة التوهج الأزرق/الأحمر */
 }
 
 .logo-container {
@@ -221,10 +206,17 @@ body::after {
     justify-content: center;
 }
 
+/* الشعار الأساسي - تم حذف فلاتر التوهج تماماً */
 .logo {
     height: 60px;
     width: auto;
-    filter: brightness(0) invert(1);
+    display: block;
+    margin: 0 auto;
+    border: none;
+    outline: none;
+    background: transparent;
+    object-fit: contain;
+    /* تم إزالة فلاتر الـ drop-shadow لإزالة التوهج الأبيض */
 }
 
 .logo-large {
@@ -621,7 +613,7 @@ body::after {
     transform: translateY(-2px);
 }
 
-/* الفوتر - شعار ثابت بدون توهج */
+/* الفوتر */
 .glass-footer {
     background: rgba(3, 6, 20, 0.3);
     backdrop-filter: blur(20px);
@@ -639,12 +631,6 @@ body::after {
     align-items: center;
     gap: 15px;
     text-align: center;
-}
-
-.footer-logo-img {
-    width: 180px;
-    height: auto;
-    filter: brightness(0) invert(1);
 }
 
 .copyright {
@@ -805,10 +791,6 @@ body::after {
         width: 150px;
     }
 
-    .footer-logo-img {
-        width: 140px;
-    }
-
     .top-rank {
         font-size: 1.5rem;
         min-width: 40px;
@@ -846,10 +828,6 @@ body::after {
         padding: 30px 20px;
     }
 
-    .footer-logo-img {
-        width: 120px;
-    }
-
     .top-item {
         padding: 10px 15px;
     }
@@ -865,4 +843,41 @@ body::after {
     width: 60px;
     height: 3px;
     background: linear-gradient(90deg, transparent, #0039a6, #d9042b, transparent);
+}
+/* تثبيت الشعار ومنع أي حركة */
+.logo, .logo-large, .loader-image, .logo:hover, .logo-large:hover {
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+    rotate: 0deg !important;
+}
+
+/* إصلاح مشكلة الفوتر بعد حذف بطاقة */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 80px;
+}
+
+/* إلغاء اعتماد الفوتر على عدد البطاقات */
+.team-grid::after {
+    content: none;
+}
+
+/* تأخيرات الظهور - تصبح اختيارية وليست إجبارية */
+.member-card {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease forwards;
+    animation-fill-mode: forwards;
+}
+
+/* الفوتر يظل في مكانه الصحيح دائماً */
+.glass-footer {
+    clear: both;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    margin-top: 80px;
 }

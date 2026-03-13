@@ -6,11 +6,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-img{
-    max-width:100%;
-    height:auto;
-    image-rendering:-webkit-optimize-contrast;
-}
+
 body {
     font-family: 'Beiruti', sans-serif;
     background: #030614;
@@ -153,7 +149,7 @@ body::after {
     75% { transform: translate(-50px, 50px) scale(1.05); }
 }
 
-/* شاشة التحميل - شعار ثابت */
+/* شاشة التحميل - شعار بدون ظل */
 .loader-wrapper {
     position: fixed;
     top: 0;
@@ -176,11 +172,7 @@ body::after {
 .loader-image {
     width: 200px;
     height: auto;
-    filter: 
-        brightness(0) invert(1) 
-        drop-shadow(0 0 20px #0039a6) 
-        drop-shadow(0 0 40px #d9042b);
-    /* ثابت بدون حركة */
+    /* بدون أي ظل أو فلتر */
 }
 
 /* المحتوى الرئيسي */
@@ -192,7 +184,7 @@ body::after {
     padding: 20px 40px;
 }
 
-/* الهيدر مع الشعار */
+/* الهيدر مع الشعار (ثابت) */
 .glass-header {
     background: rgba(3, 6, 20, 0.2);
     backdrop-filter: blur(20px);
@@ -232,25 +224,12 @@ body::after {
 .logo {
     height: 60px;
     width: auto;
-    filter: 
-        brightness(0) invert(1) 
-        drop-shadow(0 0 15px #0039a6) 
-        drop-shadow(0 0 30px #d9042b);
-    transition: all 0.4s ease;
-    image-rendering: crisp-edges;
-    -webkit-font-smoothing: antialiased;
+    filter: brightness(0) invert(1);
+    /* بدون ظل وبدون حركة */
 }
 
 .logo-large {
     height: 100px;
-}
-
-.logo:hover {
-    transform: scale(1.05) rotate(2deg);
-    filter: 
-        brightness(0) invert(1) 
-        drop-shadow(0 0 25px #0039a6) 
-        drop-shadow(0 0 50px #d9042b);
 }
 
 /* العنوان الرئيسي */
@@ -874,4 +853,3 @@ body::after {
     height: 3px;
     background: linear-gradient(90deg, transparent, #0039a6, #d9042b, transparent);
 }
-
